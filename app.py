@@ -2,6 +2,7 @@ import keras
 from keras.models import model_from_json
 from flask import Flask, redirect, url_for, request, render_template
 import librosa
+import numpy as np
 
 app = Flask(__name__)
 
@@ -23,27 +24,26 @@ loaded_model.load_weights("models/model.h5")
 # compile and evaluate loaded model
 loaded_model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
 @app.route('/')
-def mainfunc():
-    return render_template('index.html')
+def mainfunc(name=None):
+    return render_template('index.html',var=name)
 
-# @app.route('/predict',methods=['POST','GET'])
-# def upload():
-#     if request.method == 'POST':
-#         # Get the file from post request0
-#         print("executed")
-#         f = request.files['im']
-#         # Make prediction
-#         #preds = model_predict(file_path, model)
-#         f.save('uploads/'+ f.filename)
-#         img = cv2.imread('uploads/'+ f.filename)
-#         # Preprocessing the image
-#         x = cv2.resize(img,(256,256))
-#         x=x.reshape(1,256,256,3)
-#         x=x/255
-#         out=loaded_model.predict(x)
-#         print(out)
-#         print(np.argmax(out))
-#         var1=str(np.argmax(out))
-#         return render_template('index.html',var=var1)
+@app.route('/predict',methods=['POST','GET'])
+def upload():
+     if request.method == 'POST':
+         # Get the file from post request0
+         print("executed")
+         f = request.files['im']
+         # Make prediction
+         #preds = model_predict(file_path, model)
+         f.save('uploads/'+ f.filename)
+         X,sample_rate=librosa.load('uploads/'+ f.filename)
+         sample_rate=np.array(sample_rate)
+         mfccs=np.mean(librosa.feature.mfcc(y=X,n_mfcc=58).T,axis=0)
+         mfccs=mfccs.reshape(1,mfccs.shape[0],1)
+         out=loaded_model.predict(mfccs)
+         print(out)
+         print(np.argmax(out))
+         var1=str(np.argmax(out))
+         return render_template('index.html',var=var1)
   
 app.run()
