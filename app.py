@@ -3,6 +3,8 @@ from keras.models import model_from_json
 from flask import Flask, redirect, url_for, request, render_template
 import librosa
 import numpy as np
+import mysql.connector
+import time
 
 app = Flask(__name__)
 
@@ -23,8 +25,20 @@ loaded_model.load_weights("models/model.h5")
 
 # compile and evaluate loaded model
 loaded_model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
+
+## database connectivity
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  passwd="ashutosh",
+  database="mydatabase"
+)
+mycursor = mydb.cursor()
+mycursor.execute('Select * from Users')
+result=mycursor.fetchall()
 @app.route('/')
 def mainfunc(name=None):
+    print(result)
     return render_template('index.html',var=name)
 
 @app.route('/predict',methods=['POST','GET'])
@@ -44,6 +58,7 @@ def upload():
          print(out)
          print(np.argmax(out))
          var1=str(np.argmax(out))
+         time.sleep(3)
          return render_template('index.html',var=var1)
   
 app.run()

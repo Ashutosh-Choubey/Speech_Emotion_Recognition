@@ -3,19 +3,47 @@
         <title>
             SER
         </title>
+        <style>
+          div#loading {
+            width: 35px;
+            height: 35px;
+            display: none;
+            background: url(/static/loadingimage.gif) no-repeat;
+            cursor: wait;
+    }
+        </style>
+
     </head>
     <body>
+      
+      <div id='loading' style="display:none">
+        <center>
+        <img src="static/loadingimage.gif">
+      </center>
+      </div>
+      <div id='content'>
         {% if var %}
-      <center><h4 style='margin:5%'>Emotion is {{var}}</h4>
-      <button class="btn btn-secondary" id=btn onclick="window.location.href='{{url_for( 'mainfunc') }}';" style="align-self: center;">Check Another</button><br><br>
-    </center>
-    {% else %}
-    <center><form method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}" style='margin:5%'>
-      <input class=" btn btn-outline-primary" type="file" name="im" required>
-      <input type="submit" class="btn btn-outline-primary"> 
-    </form> 
-  </center> 
-    {% endif %}
-    </center>
+      <center>
+        <h4 style='margin:5%'>Emotion is {{var}}</h4>
+        <button class="btn btn-secondary" id=btn onclick="window.location.href='{{url_for( 'mainfunc') }}';" style="align-self: center;">Check Another</button><br><br>
+      </center>
+      {% else %}
+      <center>
+        <form method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}" style='margin:5%'>
+        <input class=" btn btn-outline-primary" type="file" name="im" required>
+        <input type="submit" class="btn btn-outline-primary" onclick="loading();"> 
+        </form> 
+      </center> 
+      {% endif %}
+      </div>
+      <script type="text/javascript">
+        function loading(){
+          var x = document.getElementById("loading");
+          var y = document.getElementById("content");
+          x.style.display = "block";
+          y.style.display="none";
+        }
+      </script>
     </body>
+    
 </html>
