@@ -58,7 +58,6 @@ def upload():
          print(out)
          print(np.argmax(out))
          var1=str(np.argmax(out))
-         time.sleep(3)
          return render_template('index.html',var=var1)
   
 app.run()

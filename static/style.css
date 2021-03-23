@@ -1,0 +1,42 @@
+*{
+    margin: 0%;
+    font-size: 16px;
+}
+
+body{
+    background: url("./bg.jpg") center ;
+}
+
+.center{
+
+    border: 15px solid whitesmoke;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    padding: 2.5vh 5px;
+}
+
+.emotion-header{
+    font-size: 3rem;
+	color: white;
+    margin: 5vh 0;
+}
+
+.select-another {
+    margin: 5vh 0;
+}
+
+.upload-form{
+    margin: 2.5vh 0;
+}
+
+.input-file{
+    margin:0 5%;
+}
+
+.submit-btn{
+    margin-top: 2.5%;
+}
