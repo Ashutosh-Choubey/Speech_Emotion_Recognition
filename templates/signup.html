@@ -1,7 +1,7 @@
 <html>
 <head>
-    <title> SignUp Form </title>
-    <link rel="stylesheet" type="text/css" href="style.css">   
+    <title> SER-SignUp </title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">   
 </head>
     <body>
 
@@ -16,18 +16,18 @@
 
     
     <div class="login-box">
-    <img src="g.gif" class="avatar">
+    <img src="../static/g.gif" class="avatar">
         
         <h2>SIGNUP</h2>
-            <form action="login.html" method = "POST">
+            <form action="{{url_for('signup')}}" method = "POST">
             <p>Username</p>
-            <input type="text" name="username" placeholder="Enter Username">
+            <input type="text" name="username" placeholder="Enter Username" required>
             <p>Password</p>
-            <input type="password" name="password" placeholder="Enter Password">
-	    <p>Confirm Password</p>
-	    <input type="password" name="password" placeholder="Confirm Password">
+            <input type="password" name="password" placeholder="Enter Password" required>
+	        <p>Confirm Password</p>
+	        <input type="password" name="password" placeholder="Confirm Password" required>
             <input type="submit" name="submit" value="SignUp">
-	    <a href="login.html">Already a member? Click to login</a>    
+	        <a href="{{ url_for('login') }}">Already a member? Click to login</a>    
             </form>
         
         
