@@ -33,18 +33,22 @@ mydb = mysql.connector.connect(
   passwd="ashutosh",
   database="ser"
 )
-app.secret_key='SER-G16'
+app.secret_key='SERG-16'
 @app.route('/',methods=['GET','POST'])
+def home(name=None):        
+    return render_template('home.html',var=name)
+
+@app.route('/login',methods=['GET','POST'])
 def login(name=None):
-    session.pop('userid',None)
+    
     if request.method == 'POST':
+        session.pop('userid',None)
         name2 = request.form['username']
         passw = request.form['password']
         cursor = mydb.cursor()
         cursor.execute("SELECT password FROM Users WHERE Name = '%s';"%(name2))
         #cursor.execute("SELECT pass from accounts where userid = %s;"%(name))
         result = cursor.fetchall()
-        cursor.close()
         print(result)
         if result:
             if passw==result[0][0]:
@@ -53,10 +57,10 @@ def login(name=None):
                 return redirect(url_for('model'))
             else:
                 flash("Wrong Password")
-                return redirect('/')
+                return redirect('/login')
         else:
             flash("Username doesn't exists. Create an account if you don't have one")
-            return redirect('/')        
+            return redirect('/login')        
     return render_template('login.html',var=name)
 
 @app.route('/model',methods=['GET','POST'])
@@ -77,14 +81,13 @@ def signup():
         cursor = mydb.cursor()
         cursor.execute("insert into Users(Name,password) value ('%s','%s');"%(name2,passw))
         mydb.commit()
-        cursor.close()
         flash('Account Created Successfully')
         return redirect(url_for('login'))
     return render_template('signup.html')
 
 @app.route('/predict',methods=['POST','GET'])
 def upload():
-    try:
+    try:    
         if session['userid']:
             if request.method == 'POST':
                  # Get the file from post request0
@@ -101,7 +104,7 @@ def upload():
                  print(out)
                  print(np.argmax(out))
                  var1=str(np.argmax(out))
-                 return render_template('index.html',var=var1)
+                 return render_template('result.html',var=var1)
     
     except:
         flash('Login to Continue')
