@@ -37,11 +37,17 @@
         </div>
         </center>	
         <div id='content'>
-        <div class="topnav">
-            <a class="active" href="Login.html">Home</a>
-            <a href="#contact">Contact Us</a>
-            <a href="#about">About Us</a>
-        </div>
+            <div class="bg-div">
+                
+                <nav class=" navbar navbar-expand-lg fixed-top " style= "background: rgba(0, 0, 0, 0.7);overflow: hidden;height: 60px;">
+                    <img class="navbar-brand" src="../static/logo.png" width="200" height="35" ALT="align box" ALIGN=CENTER style="margin: 18px 15px 15px 10px;" >
+                    <ul class="navbar-nav ml-auto">
+                <li class="nav-item ml-3" style="color:white;"><a href="{{url_for('home')}}" style="color:white;">Home</a></li>
+                <li class="nav-item ml-3" style="color:white;"><a href="{{url_for('about')}}" style="color:white;">About Us</a></li>
+                <li class="nav-item ml-3" style="color:white;"><a href="{{url_for('contact')}}" style="color:white;">Contact Us</a></li>
+                </ul>
+                </nav>
+            </div>
     <!-- <img src="../static/2.gif" class="sidegif"> -->
     
     

@@ -37,7 +37,12 @@ app.secret_key='SERG-16'
 @app.route('/',methods=['GET','POST'])
 def home(name=None):        
     return render_template('home.html',var=name)
-
+@app.route('/about',methods=['GET','POST'])
+def about(name=None):        
+    return render_template('about.html',var=name)
+@app.route('/contact',methods=['GET','POST'])
+def contact(name=None):        
+    return render_template('contact.html',var=name)
 @app.route('/login',methods=['GET','POST'])
 def login(name=None):
     
@@ -158,6 +163,18 @@ def upload():
                 print(np.argmax(out6))
                 print(maxoccur)
                 var1=str(np.argmax(out))
+                var3=np.percentile(out,100,0)
+                var2=np.sum(out)
+                out=out/var2
+                out=out*100
+                label = ["Fear", "Angry", "Disgust", "Neutral", "Sad", "Surprise", "Happy", "Calm"]
+                out=out.reshape(8)
+                value = list(out)
+                # print(type(value))
+                # print(value)
+                # print(out)
+                # print(var3)
+                return render_template('result.html',var=var1,value=value, label=label)
                 return render_template('result.html',var=var1)
     
     except:
